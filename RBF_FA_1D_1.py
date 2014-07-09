@@ -2,7 +2,7 @@
 """
 Initial attempt at Radial Basis Interpolation
 (Function Approximation using Radial Basis functions)
-Function to model:        y = x
+Function to model:        y = x^2
 
 David Norman
 """
