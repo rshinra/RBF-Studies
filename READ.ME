@@ -1,0 +1,27 @@
+RBF-Studies
+===========
+This is a series of studies for meshless differential equation solving
+The filename has info related to what is being done, corresponding to the following:
+RBF = Radial Basis Function (all of these should have that as their primary entry)
+FA = Function Approximation, i.e. no differential equations
+ODE = Ordinary Differential Equation
+PDE = Partial Differential Equation
+1O = First Order
+2O = Second order
+NL = Higher than second order; Non-Linear
+1D = One dimensional (x)
+2D = Two Dimensional (x,t) or (x,y)
+3D = Three Dimensional (x,y,z) or (x,y,t)
+4D = Four Dimensional (Spacetime)
+BC = Boundary Condition
+Anim =  Animated output Variable given
+Final number identifies only order of attempt, insignificant.
+
+Ia:  RBF looking for coefficients (multipliers, ck, heightfactor), Beta set
+Ib:  RBF where coefficients are given [known] but looking for  beta parameter (Fatness factor, width factor)
+Ic:  RBF where beta and coefficients are set, looking for best center points for bases.
+IIa: Beta and Coefficients missing
+IIb: Coefficents and centers missing
+IIc: Beta and Centers missing
+III: All three missing (ridiculous, computation wise)
+~ denotes that one element is missing, but not optimized, just added in, usually for animations
