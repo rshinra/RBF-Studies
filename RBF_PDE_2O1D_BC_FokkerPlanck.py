@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-Initial attempt at Radial Basis Solving
+Fokker Planck Attempt
 (Solving Differential Equations using Radial Basis functions)
-Function to model:      e^px-1/e^p-1     p = a/c
-Differential equation:  au' = cu'' | u(0) = 0 | u(1) = 1
+Function to model:      r = -40x^3 + 10x | u = .455 e^[-10x^4+5x^2]
+Differential equation:  (ru)' = u'' | u(-2) = 0 | u(2) = 1
 David Norman
 """
 # Imports----------------------------------------------------------------------
@@ -13,33 +13,33 @@ import matplotlib.pyplot as plt
 #Global variables--------------------------------------------------------------
   # Input parameters for RBF Level Ia
     # Basis center Locations / Number of Bases
-xc=np.linspace(0,1,50)
+xbound0 = -2.
+xbound1 = 2.
+xc=np.linspace(xbound0,xbound1,50)
     # Width parameter (How Fat your basis functions are)
 #beta = np.linspace(1,20,39)  
 beta2 = 100
     # "Test Data points" (function evaluation)
-xd = np.linspace(0,1,101)
+xd = np.linspace(xbound0,xbound1,201)
   # Missing Parameter for RBF Level Ia
 #coeff = np.ones(np.size(xc)) #Initialized previously, but created from lstsq
   # Boundary condition to "solve problem"
-xbound0 = 0.
-xbound1 = 1.
-d1=20.
-d2=6.
-p=d1/d2
 # Functions--------------------------------------------------------------------
  # Function for evaluation:  f(x) -> 
 def f(x):
-   return (np.exp(p*x) - 1)/(np.exp(p) - 1)
+   return .455 * np.exp(-10*x*x*x*x + 5*x*x)
    
  # Function Derivative for "test Data" f'(x) -> 
 def f_prime(x):
-    return p*(np.exp(p*x))/(np.exp(p) - 1)
+    return .455 * np.exp(-10*x*x*x*x + 5*x*x) * (-40*x*x*x + 10*x)
 
  # Function Second Derivative for "test Data" f''(x) -> 1
 def f_double_prime(x):
-    return p*p*(np.exp(p*x))/(np.exp(p)-1)
-
+    return .455 * np.exp(-10*x*x*x*x + 5*x*x) * (-120*x*x + 10 + (-40*x*x*x + 10*x)*(-40*x*x*x + 10*x))
+def gamma(x):
+    return -40*x*x*x + 10*x
+def gamma_prime(x):
+    return -120*x*x + 10
     
  # Basis Evaluation
 def basis(i,x):                     # RADIAL Basis i evaluated at x
@@ -82,7 +82,7 @@ for j in range(np.size(xc)):     # J is columns of A
     for i in range(np.size(xd)):    # I is rows of A
     # A for PDE is Differential equation with Basis, Basis_prime, and Basis Double Prime (j) evaluated at xd i
     # Differential equation to solve is: REPLACEu' = 1 | รป' = 1 | A = phi'(x) g = 1
-        A[i,j]=p*basis_prime(j,xd[i])-basis_double_prime(j,xd[i])
+        A[i,j]=basis_double_prime(j,xd[i])-basis_prime(j,xd[i])*gamma(xd[i])-basis(j,xd[i])*gamma_prime(xd[i])
 # Build Matrix (Vector)  (adding one for initial/boundary condition)
 
 g=np.zeros(np.size(xd)+2)                       # Same here with the "2"
