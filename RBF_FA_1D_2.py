@@ -15,7 +15,7 @@ import matplotlib.pyplot as plt
   # Input parameters for RBF Level Ia
     # Basis center Locations / Number of Bases
 #centers = 6            Can get from size of xc
-xc=np.linspace(0,1,18)
+xc=np.linspace(0,1,21)
     # Width parameter (How Fat your basis functions are)
 beta = 100                  # beta is actually Beta squared 
     # "Test Data" (function evaluation)
@@ -28,7 +28,7 @@ coeff = np.ones(np.size(xc)) #Replace with zeros when works
 def f(x):
    y=np.zeros(np.size(x))
    for i in range(np.size(x)):
-       y[i]=xd[i]*xd[i]-np.sin(2*np.pi*xd[i])+2
+       y[i]=x[i]*x[i]-np.sin(2*np.pi*x[i])+2
    return y
  # Basis Evaluation------------------------------------------
 def basis(i,x):                     # Basis i evaluated at x
@@ -55,14 +55,14 @@ def plot_rbf(p):
 # Main
 plt.clf()
 # Build Matrix A
-A = np.zeros((np.size(xd),np.size(xc)))
+A = np.zeros((np.size(xc),np.size(xc)))
 for j in range(np.size(coeff)):     # J is columns of A
-    for i in range(np.size(xd)):    # I is rows of A
+    for i in range(np.size(xc)):    # I is rows of A
     # A is Basis j evaluated at xd i
-        A[i,j]=basis(j,xd[i])
+        A[i,j]=basis(j,xc[i])
 # Build Matrix (Vector)
-g=f(xd)
-#ANS = f(x)
+g=f(xc)
+ans = f(x)
 # Solve
 a = np.linalg.lstsq(A,g)
 coeff=a[0]
@@ -70,4 +70,4 @@ coeff=a[0]
 for i in range(np.size(xc)):
     plot_rbf(i)    
 plot_f()
-plt.plot(xd,g,'b')
+plt.plot(xd,ans,'b')

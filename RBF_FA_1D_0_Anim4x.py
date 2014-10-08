@@ -60,16 +60,16 @@ for b in range(26):
     plt.clf()
     xc=np.linspace(0,1,b+1)
     coeff = np.zeros(np.size(xc))
-    A = np.zeros((np.size(xd),np.size(xc)))
+    A = np.zeros((np.size(xc),np.size(xc)))
     for j in range(b+1):     # J is columns of A
-        for i in range(np.size(xd)):    # I is rows of A
+        for i in range(np.size(xc)):    # I is rows of A
         # A is Basis j evaluated at xd i
-            A[i,j]=basis(j,xd[i])
+            A[i,j]=basis(j,xc[i])
     # Build Matrix (Vector)
       #ALREADY BUILT, Y=X
     #ANS = f(x)
     # Solve
-    a = np.linalg.lstsq(A,np.transpose(xd))
+    a = np.linalg.lstsq(A,np.transpose(xc))
     coeff=a[0]
     
     #for i in range(b+1):
