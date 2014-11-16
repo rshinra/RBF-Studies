@@ -12,7 +12,7 @@ plt.clf()               # Clear the figure
 centers = 5             # Number of Bases (centered at "centers")                        Meade notation:
 xi=[.25,.33,.57,.75,.9] # Vector of centers, xi's dimension should be "centers"
 lam=[3,5,2,7,7]         # lambda, multiplyer of basis, or ck in Meadian notation
-beta = 100              # Beta, fatness factor
+beta = 10              # Beta, fatness factor
 x = np.linspace(0,1,1000)   # x vector -> evaluation points
 
 def f(x):               # f(x) add up all bases*height and then plot it

@@ -63,22 +63,22 @@ def plot_rbf(p):
 # Main-------------------------------------------------------------------------
 plt.clf()
 # Build Matrix A
-A = np.zeros((np.size(xd)+1,np.size(xc)))
+A = np.zeros((np.size(xc)+1,np.size(xc)))
 for j in range(np.size(xc)):     # J is columns of A
-    for i in range(np.size(xd)):    # I is rows of A
+    for i in range(np.size(xc)):    # I is rows of A
     # A for PDE is Differential equation with Basis and Basis_prime (j) evaluated at xd i
     # Differential equation to solve is: u' = 1 | รป' = 1 | A = phi'(x) g = 1
-        A[i,j]=basis_prime(j,xd[i])
+        A[i,j]=basis_prime(j,xc[i])
 # Build Matrix (Vector)  (adding one for initial/boundary condition)
 
-g=np.zeros(np.size(xd)+1)
-for i in range(np.size(xd)):
-    g[i] = f_prime(xd[i])
+g=np.zeros(np.size(xc)+1)
+for i in range(np.size(xc)):
+    g[i] = f_prime(xc[i])
 
 # Build out Matrix and vector for boundary equation
 for j in range(np.size(xc)):
-    A[np.size(xd),j]=basis(j,xbound)
-g[np.size(xd)]=f(xbound)
+    A[np.size(xc),j]=basis(j,xbound)
+g[np.size(xc)]=f(xbound)
 # Solve
 a = np.linalg.lstsq(A,g)
 coeff=a[0]      # Copy to coefficients
